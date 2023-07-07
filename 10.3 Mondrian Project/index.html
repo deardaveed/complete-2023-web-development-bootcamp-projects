@@ -6,8 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mondrian Project</title>
   <style>
-    /* 
-    Write your CSS here 
+    /*
+    Write your CSS here
     Gap Colour: #000
     White: #F0F1EC
     Red: #E72F24
@@ -19,11 +19,114 @@
     HINT: Remember you can't change the properties of grid lines.
     But grid lines are transparent!
     */
+
+		.div-container {
+			display: grid;
+			grid-template-columns: 320px 198px 153px 50px;
+			grid-template-rows: 414p 130px 155px 20px;
+			height: 100vh;
+			/* align-items: center; */
+			justify-content: center;
+			/* align-content: center; */
+			gap: 9px;
+			background-color: #232629;
+		}
+
+		.div-container div {
+			border:1px;
+			border-color: black;
+		}
+
+		.div-1 {
+			/* width: auto;
+			height: auto; */
+			background-color: #E72F24;
+			grid-column-start: 1;
+			grid-column-end: 2;
+			grid-row-start: 1;
+			grid-row-end: 2;
+		}
+
+		.div-2 {
+			background-color: #F0F1EC;
+			grid-column-start: 2;
+			grid-column-end: 5;
+			grid-row-start: 1;
+			grid-row-end: 2;
+		}
+
+		.div-3 {
+			background-color: #F0F1EC;
+			grid-column-start: 1;
+			grid-column-end: 2;
+			grid-row-start: 2;
+			grid-row-end: 4;
+		}
+
+		.div-4 {
+			background-color: #F0F1EC;
+			grid-column-start: 2;
+			grid-column-end: 4;
+			grid-row-start: 2;
+			grid-row-end: 4;
+		}
+
+		.div-5 {
+			background-color: #004592;
+			grid-column-start: 4;
+			grid-column-end: 5;
+			grid-row-start: 2;
+			grid-row-end: 3;
+		}
+
+		.div-6 {
+			background-color: #F0F1EC;
+			grid-column-start: 4;
+			grid-column-end: 5;
+			grid-row-start: 3;
+			grid-row-end: 5;
+		}
+
+		.div-7 {
+			background-color: #F0F1EC;
+			grid-column-start: 1;
+			grid-column-end: 2;
+			grid-row-start: 4;
+			grid-row-end: 5;
+		}
+
+		.div-8 {
+			background-color: #F9D01E;
+			grid-column-start: 2;
+			grid-column-end: 3;
+			grid-row-start: 4;
+			grid-row-end: 5;
+		}
+
+		.div-9 {
+			background-color: #232629;
+			grid-column-start: 3;
+			grid-column-end: 4;
+			grid-row-start: 4;
+			grid-row-end: 5;
+		}
   </style>
 </head>
 
 <body>
   <!-- Write your HTML here -->
+	<div class="div-container">
+		<div class="div-1">1</div>
+		<div class="div-2">2</div>
+		<div class="div-3">3</div>
+		<div class="div-4">4</div>
+		<div class="div-5">5</div>
+		<div class="div-6">6</div>
+		<div class="div-7">7</div>
+		<div class="div-8">8</div>
+		<div class="div-9">9</div>
+	</div>
+
 </body>
 
 </html>
