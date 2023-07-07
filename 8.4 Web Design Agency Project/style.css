@@ -5,16 +5,32 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 95vh;
-	margin-top: 50px;
-	margin-left: 50px;
+
 }
 .main {
   flex: 1;
+}
+/*
+.card-title {
+	float: right
+} */
+
+.card {
+	width: 45%;
+}
+
+.left {
+	float: left;
+}
+
+.right {
+	float: right;
 }
 
 .tile-image {
 	height: 200px;
 	float: left;
+	margin-right: 50px;
 }
 
 h1 {
@@ -30,21 +46,40 @@ span {
 	color: #191970;
 }
 
-@media (min-width: 600px) {
-
-}
-
-@media (max-width: 600px) {
+/* @media (min-width: 600px) {
 
 	h1 {
-		font-size: 3em;
+		font-size: 3.5em;
 	}
+
+	.main, .card, .card-title, .card-text {
+		display: block;
+	}
+
+} */
+
+@media (max-width: 680px) {
 
 	logo {
-		width: 50%;
+		width: 100px;
 	}
 
-	div  h1 {
+	h1 {
+		font-size: 3.5rem;
 		text-align: center;
+	}
+
+	.card {
+		width: 100%;
+		display: block;
+		margin-bottom: 30px;
+		text-align: justify;
+	}
+
+	.card img {
+		margin-bottom: 10px;
+		width: 100%;
+		display: inline;
+		object-fit: cover;
 	}
 }
