@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "eslint": "^8.44.0",
+    "eslit": "^6.0.0"
+  }
+}

@@ -5,9 +5,16 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 95vh;
+	margin-top: 50px;
+	margin-left: 50px;
 }
 .main {
   flex: 1;
+}
+
+.tile-image {
+	height: 200px;
+	float: left;
 }
 
 h1 {
@@ -19,3 +26,25 @@ footer {
   color: midnightblue;
 }
 
+span {
+	color: #191970;
+}
+
+@media (min-width: 600px) {
+
+}
+
+@media (max-width: 600px) {
+
+	h1 {
+		font-size: 3em;
+	}
+
+	logo {
+		width: 50%;
+	}
+
+	div  h1 {
+		text-align: center;
+	}
+}
