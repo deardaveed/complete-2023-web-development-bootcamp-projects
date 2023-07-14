@@ -13,9 +13,7 @@ function nextSequence() {
 
   $("#" + randomChosenColor).fadeOut(100).fadeIn(100);
 
-  let buttonSound = new Audio("./sounds/" + randomChosenColor + ".mp3");
-
-  buttonSound.play();
+  playSound(randomChosenColor);
 
 }
 
@@ -26,4 +24,12 @@ $(".btn").on("click", function (event) {
   console.log("userChosenColor: ", userChosenColor) //development only
   userClickedPattern.push(userChosenColor);
   console.log("userClickedPattern array: ", userClickedPattern);
+
+  playSound(userChosenColor);
 });
+
+function playSound(name) {
+
+  let buttonSound = new Audio("./sounds/" + name + ".mp3");
+  buttonSound.play();
+}
