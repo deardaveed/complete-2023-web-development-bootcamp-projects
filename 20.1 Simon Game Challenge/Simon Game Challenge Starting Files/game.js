@@ -27,8 +27,6 @@ function nextSequence() {
 
 }
 
-// nextSequence();
-
 $(".btn").on("click", function (event) {
   let userChosenColor = event.target.id;
   console.log("userChosenColor: ", userChosenColor) //development only
@@ -37,6 +35,10 @@ $(".btn").on("click", function (event) {
 
   playSound(userChosenColor);
   animatePress(userChosenColor);
+
+  lastAnswer = userClickedPattern.length - 1;
+
+  checkAnswer(lastAnswer);
 });
 
 function playSound(name) {
@@ -66,3 +68,28 @@ $(document).on("keydown", function () {
   gameStart = true;
 
 })
+
+function checkAnswer(currentLevel) {
+  console.log("currentLevel: ", currentLevel);
+  // for (let i = 0; i <= gamePattern.length; i++) {
+    if (gamePattern[currentLevel] === userClickedPattern[currentLevel]) {
+      console.log("SUCCESS");
+      if (gamePattern.length - 1 === currentLevel) {
+        setTimeout(nextSequence, 1000);
+        userClickedPattern = [];
+      }
+      } else {
+      console.log("WRONG");
+      let buttonSound = new Audio("./sounds/wrong.mp3");
+      buttonSound.play();
+
+      $("body").addClass("game-over");
+
+      setTimeout(function () {
+        $("body").removeClass('game-over')
+      }, 200);
+
+      $("#level-title").text("Game Over, Press Any Key to Restart");
+      }
+  // }
+}
