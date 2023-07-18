@@ -2,6 +2,7 @@ let buttonColors = ["red", "blue", "green", "yellow"];
 let gamePattern = [];
 let userClickedPattern = [];
 let level = 0;
+let gameStart = false;
 
 function nextSequence() {
 
@@ -60,8 +61,6 @@ function animatePress(currentColor) {
 
 }
 
-let gameStart = false;
-
 $(document).on("keydown", function () {
 
   if (!gameStart) nextSequence();
@@ -90,6 +89,15 @@ function checkAnswer(currentLevel) {
       }, 200);
 
       $("#level-title").text("Game Over, Press Any Key to Restart");
+
+      startOver();
       }
   // }
+}
+
+function startOver() {
+  level = 0;
+  gamePattern = [];
+  userClickedPattern = [];
+  gameStart = false;
 }
