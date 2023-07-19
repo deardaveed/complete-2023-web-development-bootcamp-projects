@@ -39,7 +39,7 @@ app.get("/", function (req, res) {
   //     day = "Saturday";
   //     break;
   //   default:
-  //     console.log("Error: current day is equal to:" + currentDay)
+  //   console.log("Error: current day is equal to:" + currentDay)
   // }
 
   res.render("list", {
