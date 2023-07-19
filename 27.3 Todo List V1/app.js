@@ -11,37 +11,40 @@ app.get("/", function (req, res) {
   let currentDay = today.getDay();
   let day = "";
 
-  switch (currentDay) {
-    case 0:
-      day = "Sunday";
-      break;
-    case 1:
-      day = "Monday";
-      break;
-    case 2:
-      day = "Tuesday";
-      break;
-    case 3:
-      day = "Wednesday";
-      break;
-    case 4:
-      day = "Thursday";
-      break;
-    case 5:
-      day = "Friday";
-      break;
-    case 6:
-      day = "Saturday";
-      break;
-  }
+  daysOfTheWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
-  // if (currentDay === 6 || currentDay === 0) {
-  //   day = "Weekend";
-  // } else {
-  //   day = "Weekday";
+  day = daysOfTheWeek[currentDay];
+  // or...
+
+  // switch (currentDay) {
+  //   case 0:
+  //     day = "Sunday";
+  //     break;
+  //   case 1:
+  //     day = "Monday";
+  //     break;
+  //   case 2:
+  //     day = "Tuesday";
+  //     break;
+  //   case 3:
+  //     day = "Wednesday";
+  //     break;
+  //   case 4:
+  //     day = "Thursday";
+  //     break;
+  //   case 5:
+  //     day = "Friday";
+  //     break;
+  //   case 6:
+  //     day = "Saturday";
+  //     break;
+  //   default:
+  //     console.log("Error: current day is equal to:" + currentDay)
   // }
 
-  res.render("list", { kindOfDay: day });
+  res.render("list", {
+    kindOfDay: day
+  });
 });
 
 app.listen(process.env.PORT || 3000, function () {
