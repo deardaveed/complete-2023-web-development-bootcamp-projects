@@ -82,14 +82,14 @@ app.get("/work", function (req, res) {
   res.render("list", { listTitle: "Work List", newListItems: workItems });
 })
 
-app.post("/work", function (req, res) {
-  let item = req.body.newItem;
+// app.post("/work", function (req, res) {
+//   let item = req.body.newItem;
 
-  workItems.push(item);
+//   workItems.push(item);
 
-  res.redirect("/work");
+//   res.redirect("/work");
 
-})
+// })
 
 app.listen(process.env.PORT || 3000, function () {
   console.log("Listening on port 3000");
