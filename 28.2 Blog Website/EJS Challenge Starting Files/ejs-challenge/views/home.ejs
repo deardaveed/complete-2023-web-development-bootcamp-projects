@@ -1,0 +1,24 @@
+<%- include("partials/header") %>
+
+<h1>Home</h1>
+
+<p>
+	<%= content %>
+</p>
+
+<% blogs.forEach(function(blog){ %>
+	<h1>
+		<%= blog.title %>
+	</h1>
+	<p>
+<%	if (blog.content.length > 100) { %>
+<%		let truncatedContent = blog.content.slice(0, 100); %>
+		<%= truncatedContent %>
+		 <a href="/posts/<%= blog.title %>">Read More</a>
+<%	} else { %>
+		<%= blog.content %>
+<%	} %>
+	</p>
+<% })%>
+
+<%- include("partials/footer"); %>
