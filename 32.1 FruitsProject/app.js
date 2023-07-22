@@ -37,7 +37,6 @@ const person = new Person({
   age: 37
 });
 
-
 // person.save();
 
 const findAndPrintFruits = async () => {
@@ -54,7 +53,7 @@ const findAndPrintFruits = async () => {
   }
 };
 
-findAndPrintFruits();
+// findAndPrintFruits();
 
 // quick way to update entry without try/catch block:
 // ----------
@@ -71,9 +70,9 @@ findAndPrintFruits();
 // })();
 
 // same as above, but more succinct:
-(async () => {
-  await Fruit.updateOne({ _id: "64bb7c246ef38c0a6f5d4a44" }, { name: "Cabinet" });
-})();
+// (async () => {
+//   await Fruit.updateOne({ _id: "64bb7c246ef38c0a6f5d4a44" }, { name: "Cabinet" });
+// })();
 
 // using function expression with try/catch block..
 // const updateEntry = async () => {
@@ -85,3 +84,14 @@ findAndPrintFruits();
 // }
 
 // updateEntry();
+
+// (async () => {
+//   await Fruit.deleteOne({ name: "Cabinet" });
+// })();
+
+async function deleteOneFruit() {
+  await Fruit.deleteOne({ name: "Apple" });
+  mongoose.connection.close();
+}
+
+deleteOneFruit();
