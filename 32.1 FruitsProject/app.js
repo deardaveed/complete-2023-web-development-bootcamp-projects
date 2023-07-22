@@ -17,6 +17,7 @@ const fruit = new Fruit({
 });
 
 // fruit.save()
+
 const personSchema = new mongoose.Schema({
   name: String,
   age: Number
@@ -49,10 +50,18 @@ const watermelon = new Fruit({
   review: "What is there to say?"
 })
 
-Fruit.insertMany([kiwi, pineapple, watermelon])
-  .then((insertedFruits) => {
-    console.log("Inserted fruits:", insertedFruits);
+// Fruit.insertMany([kiwi, pineapple, watermelon])
+//   .then((insertedFruits) => {
+//     console.log("Inserted fruits:", insertedFruits);
+//   })
+//   .catch((err) => {
+//     console.error("Error inserting fruits:", err);
+// })
+
+Fruit.find()
+  .then((results) => {
+    console.log("Matches found: ", results)
   })
   .catch((err) => {
-    console.error("Error inserting fruits:", err);
+    console.error("Error getting results!");
 })
