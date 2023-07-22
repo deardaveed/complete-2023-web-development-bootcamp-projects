@@ -58,10 +58,36 @@ const watermelon = new Fruit({
 //     console.error("Error inserting fruits:", err);
 // })
 
-Fruit.find()
-  .then((results) => {
-    console.log("Matches found: ", results)
-  })
-  .catch((err) => {
-    console.error("Error getting results!");
-})
+const findAndPrintFruits = async () => {
+  try {
+    const results = await Fruit.find();
+
+    mongoose.connection.close();
+
+    results.forEach(function(result) {
+      console.log(result.name);
+    });
+  } catch (err) {
+    console.error("Error getting results!", err);
+  }
+};
+
+findAndPrintFruits();
+
+// async function findAndPrintFruits() {
+//   try {
+//     const results = await Fruit.find();
+
+//     results.forEach((result) => {
+//       console.log(result.name);
+//     });
+//   } catch (err) {
+//     console.error("Error getting results!", err);
+//   }
+// }
+
+// findAndPrintFruits();
+
+// foundResults.forEach((fruit) => {
+//   console.log(fruit.name);
+// })
