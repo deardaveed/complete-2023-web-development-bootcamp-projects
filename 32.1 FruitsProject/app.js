@@ -30,3 +30,29 @@ const person = new Person({
 });
 
 // person.save();
+
+const kiwi = new Fruit({
+  name: "Kiwi",
+  rating: 2,
+  review: "Not my favorite!"
+})
+
+const pineapple = new Fruit({
+  name: "Pineapple",
+  rating: 9,
+  review: "As sweet as you!"
+})
+
+const watermelon = new Fruit({
+  name: "Watermelon",
+  rating: 10,
+  review: "What is there to say?"
+})
+
+Fruit.insertMany([kiwi, pineapple, watermelon])
+  .then((insertedFruits) => {
+    console.log("Inserted fruits:", insertedFruits);
+  })
+  .catch((err) => {
+    console.error("Error inserting fruits:", err);
+})
