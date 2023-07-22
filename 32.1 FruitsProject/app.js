@@ -3,8 +3,15 @@ const mongoose = require("mongoose");
 mongoose.connect("mongodb://localhost:27017/fruitsDB", {useNewUrlParser: true});
 
 const fruitSchema = new mongoose.Schema({
-  name: String,
-  rating: Number,
+  name: {
+    type: String,
+    required: [true, "Please check your data entry, no name specified!"]
+  },
+  rating: {
+    type: Number,
+    min: 1,
+    max: 10
+  },
   review: String
 });
 
@@ -12,11 +19,11 @@ const Fruit = mongoose.model("Fruit", fruitSchema);
 
 const fruit = new Fruit({
   name: "Apple",
-  rating: 7,
+  rating: 2,
   review: "Pretty yummy"
 });
 
-// fruit.save()
+// fruit.save();
 
 const personSchema = new mongoose.Schema({
   name: String,
@@ -30,33 +37,8 @@ const person = new Person({
   age: 37
 });
 
+
 // person.save();
-
-const kiwi = new Fruit({
-  name: "Kiwi",
-  rating: 2,
-  review: "Not my favorite!"
-})
-
-const pineapple = new Fruit({
-  name: "Pineapple",
-  rating: 9,
-  review: "As sweet as you!"
-})
-
-const watermelon = new Fruit({
-  name: "Watermelon",
-  rating: 10,
-  review: "What is there to say?"
-})
-
-// Fruit.insertMany([kiwi, pineapple, watermelon])
-//   .then((insertedFruits) => {
-//     console.log("Inserted fruits:", insertedFruits);
-//   })
-//   .catch((err) => {
-//     console.error("Error inserting fruits:", err);
-// })
 
 const findAndPrintFruits = async () => {
   try {
@@ -74,20 +56,32 @@ const findAndPrintFruits = async () => {
 
 findAndPrintFruits();
 
-// async function findAndPrintFruits() {
-//   try {
-//     const results = await Fruit.find();
+// quick way to update entry without try/catch block:
+// ----------
+// async function updateFruit() {
+//   await Fruit.updateOne({ _id: "64bb7c246ef38c0a6f5d4a44" }, { name: "Strawberry" });
+// }
 
-//     results.forEach((result) => {
-//       console.log(result.name);
-//     });
+// updateFruit();
+
+// update entry without try/catch block, using function declaration:
+// ------------
+// (async function() {
+//   await Fruit.updateOne({ _id: "64bb7c246ef38c0a6f5d4a44" }, { name: "Cabinet" });
+// })();
+
+// same as above, but more succinct:
+(async () => {
+  await Fruit.updateOne({ _id: "64bb7c246ef38c0a6f5d4a44" }, { name: "Cabinet" });
+})();
+
+// using function expression with try/catch block..
+// const updateEntry = async () => {
+//   try {
+//     const update = await Fruit.updateOne({ _id: "64bb7c246ef38c0a6f5d4a44" }, { rating: 3 });
 //   } catch (err) {
-//     console.error("Error getting results!", err);
+//     console.error("Error updating entry!");
 //   }
 // }
 
-// findAndPrintFruits();
-
-// foundResults.forEach((fruit) => {
-//   console.log(fruit.name);
-// })
+// updateEntry();
