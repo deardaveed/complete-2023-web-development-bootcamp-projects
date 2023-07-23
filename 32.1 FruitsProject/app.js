@@ -53,7 +53,7 @@ const findAndPrintFruits = async () => {
   }
 };
 
-// findAndPrintFruits();
+findAndPrintFruits();
 
 // quick way to update entry without try/catch block:
 // ----------
@@ -75,13 +75,13 @@ const findAndPrintFruits = async () => {
 // })();
 
 // using function expression with try/catch block..
-// const updateEntry = async () => {
-//   try {
-//     const update = await Fruit.updateOne({ _id: "64bb7c246ef38c0a6f5d4a44" }, { rating: 3 });
-//   } catch (err) {
-//     console.error("Error updating entry!");
-//   }
-// }
+const updateEntry = async () => {
+  try {
+    const update = await Fruit.updateOne({ _id: "64bb7c246ef38c0a6f5d4a44" }, { rating: 3 });
+  } catch (err) {
+    console.error("Error updating entry!");
+  }
+}
 
 // updateEntry();
 
