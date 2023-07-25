@@ -96,21 +96,27 @@ async function main() {
         res.redirect("/" + customListName);
       }
     })
-
   });
 
   app.post("/", function (req, res) {
 
     const itemName = req.body.newItem;
+    const listName = req.body.list;
 
     const item = new Item({
       name: itemName
     })
 
-    item.save();
-
-    console.log(item);
-    res.redirect("/");
+    if (listName === "Today") {
+      item.save();
+      res.redirect("/");
+    } else {
+      List.findOne({ name: listName }).then(function (foundList) {
+        foundList.items.push(item);
+        foundList.save();
+        res.redirect("/" + listName);
+      })
+    }
 
   });
 
