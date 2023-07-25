@@ -71,16 +71,36 @@ async function main() {
 
   app.post("/", function (req, res) {
 
-    const item = req.body.newItem;
+    const itemName = req.body.newItem;
 
-    if (req.body.list === "Work") {
-      workItems.push(item);
-      res.redirect("/work");
-    } else {
-      items.push(item);
-      res.redirect("/");
-    }
+    const item = new Item({
+      name: itemName
+    })
+
+    item.save();
+
+    console.log(item);
+    res.redirect("/");
+
   });
+
+  app.post("/delete", function (req, res) {
+    const checkedItemId = req.body.checkbox;
+
+    Item.findOneAndDelete({ _id: checkedItemId }).then(function (deletedItem) {
+      if (deletedItem) {
+
+        console.log("Item was deleted: ", + deletedItem);
+
+      } else {
+        console.log("Item not found.");
+      }
+    }).catch((err) => {
+      console.error("Error deleting item: ", err);
+    });
+
+    res.redirect("/");
+  })
 
   app.get("/work", function (req, res) {
     res.render("list", { listTitle: "Work List", newListItems: workItems });
