@@ -43,19 +43,25 @@ async function main() {
 
   const defaultItems = [item1, item2, item3];
 
-  try {
-    await Item.insertMany(defaultItems);
-    console.log("Items entered successfully");
-  } catch (err) {
-    console.error("Error inserting items!", err);
-  }
-
   app.get("/", function (req, res) {
 
     try {
       Item.find({}).then(function (foundItems) {
 
-        res.render("list", { listTitle: "Today", newListItems: foundItems });
+        if (foundItems.length === 0) {
+
+          try {
+            Item.insertMany(defaultItems);
+            console.log("Items entered successfully");
+          } catch (err) {
+            console.error("Error inserting items!", err);
+          }
+          // res.redirect("/");
+        } else {
+
+          res.render("list", { listTitle: "Today", newListItems: foundItems });
+
+        }
       })
     } catch (err) {
       console.error("Not found!", err);
