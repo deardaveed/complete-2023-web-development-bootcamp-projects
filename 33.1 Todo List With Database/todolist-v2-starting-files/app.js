@@ -43,6 +43,13 @@ async function main() {
 
   const defaultItems = [item1, item2, item3];
 
+  const listSchema = {
+    name: String,
+    items: [itemsSchema]
+  }
+
+  const List = mongoose.model("List", listSchema);
+
   app.get("/", function (req, res) {
 
     try {
@@ -66,6 +73,29 @@ async function main() {
     } catch (err) {
       console.error("Not found!", err);
     }
+
+  });
+
+  app.get("/:customListName", function (req, res) {
+    const customListName = req.params.customListName;
+
+    List.findOne({ name: customListName }).then(function (foundList) {
+      if (foundList) {
+        console.log("result found!", foundList);
+        res.render("list", { listTitle: foundList.name, newListItems: foundList.items });
+
+      } else {
+        console.log("could not find");
+
+        const list = new List({
+          name: customListName,
+          items: defaultItems
+        })
+
+        list.save();
+        res.redirect("/" + customListName);
+      }
+    })
 
   });
 
