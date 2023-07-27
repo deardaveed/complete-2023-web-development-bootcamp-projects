@@ -67,7 +67,7 @@ async function main() {
         } else {
 
           res.render("list", { listTitle: "Today", newListItems: foundItems });
-
+2
         }
       })
     } catch (err) {
@@ -81,7 +81,7 @@ async function main() {
 
     List.findOne({ name: customListName }).then(function (foundList) {
       if (foundList) {
-        console.log("result found!", foundList);
+        // console.log("result found!", foundList);
         res.render("list", { listTitle: foundList.name, newListItems: foundList.items });
 
       } else {
@@ -122,20 +122,29 @@ async function main() {
 
   app.post("/delete", function (req, res) {
     const checkedItemId = req.body.checkbox;
+    const listName = req.body.listName;
 
-    Item.findOneAndDelete({ _id: checkedItemId }).then(function (deletedItem) {
-      if (deletedItem) {
+    if (listName === "Today") {
+      Item.findOneAndDelete({ _id: checkedItemId }).then(function (deletedItem) {
+        if (deletedItem) {
+          console.log(deletedItem)
+          console.log("Item was deleted: ", deletedItem.name);
 
-        console.log("Item was deleted: ", + deletedItem);
+        } else {
+          console.log("Item not found.");
+        }
+      }).catch((err) => {
+        console.error("Error deleting item: ", err);
+      });
 
-      } else {
-        console.log("Item not found.");
-      }
-    }).catch((err) => {
-      console.error("Error deleting item: ", err);
-    });
-
-    res.redirect("/");
+      res.redirect("/");
+    } else {
+      List.findOneAndUpdate({ name: listName },
+        { $pull: { items: { _id: checkedItemId } } }
+      ).then(function () {
+        res.redirect("/" + listName);
+      })
+    }
   })
 
   app.get("/work", function (req, res) {
