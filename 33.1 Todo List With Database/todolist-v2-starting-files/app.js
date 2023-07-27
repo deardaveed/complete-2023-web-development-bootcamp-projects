@@ -17,9 +17,12 @@ main().catch(function (err) {
   console.log(err);
 });
 
+
 //no longer added to add 2nd parameter to connect method, {usNewUrlParser}
+
+//for local DB hosting, use "mongodb://localhost:27017/todolistDB"
 async function main() {
-  await mongoose.connect("mongodb://localhost:27017/todolistDB");
+  await mongoose.connect("mongodb+srv://admin:test123@cluster0.hz4f6x7.mongodb.net/todolistDB");
 
   // 1. define schema
   const itemsSchema = new mongoose.Schema({
