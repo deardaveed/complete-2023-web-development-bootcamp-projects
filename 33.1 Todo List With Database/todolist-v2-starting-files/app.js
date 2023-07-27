@@ -3,6 +3,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const _  = require("lodash");
 
 const app = express();
 
@@ -77,7 +78,7 @@ async function main() {
   });
 
   app.get("/:customListName", function (req, res) {
-    const customListName = req.params.customListName;
+    const customListName = _.capitalize(req.params.customListName);
 
     List.findOne({ name: customListName }).then(function (foundList) {
       if (foundList) {
@@ -85,7 +86,7 @@ async function main() {
         res.render("list", { listTitle: foundList.name, newListItems: foundList.items });
 
       } else {
-        console.log("could not find");
+        // console.log("could not find");
 
         const list = new List({
           name: customListName,
@@ -117,7 +118,6 @@ async function main() {
         res.redirect("/" + listName);
       })
     }
-
   });
 
   app.post("/delete", function (req, res) {
