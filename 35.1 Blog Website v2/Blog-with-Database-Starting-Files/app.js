@@ -86,10 +86,28 @@ app.post("/compose", async function (req, res) {
 
 })
 
-app.get("/posts/:postId", function (req, res) {
+app.get("/posts/:postId", async function (req, res) {
   const requestedPostId = req.params.postId;
-  const requestedTitle = _.lowerCase(req.params.postName);
 
+  await Post.findOne({ _id: requestedPostId }).then(function (foundPost) {
+    if (foundPost) {
+
+      console.log("POST FOUND!");
+
+      res.render("post", {
+        title: foundPost.title,
+        content: foundPost.content
+      })
+    } else {
+      console.log("POST NOT FOUND!");
+    }
+  }).catch(function (err) {
+    console.log("*********FAIL*******");
+    console.error("FAILED. THIS IS THE 'CATCH' ERROR MSG: ", err)
+    console.error("FAILED. THIS IS THE 'CATCH' ERROR MSG: ", err.message);
+;
+
+  })
 });
 
 app.listen(3000, function() {
