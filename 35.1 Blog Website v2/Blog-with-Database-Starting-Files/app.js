@@ -37,7 +37,7 @@ main().catch(function (err) {
 })
 
 async function main() {
-  await mongoose.connect("mongodb://127.0.0.1:27017/blogDB");
+  await mongoose.connect("mongodb+srv://admin:test123@cluster0.hz4f6x7.mongodb.net/blogDB");
 }
 
 app.get("/", async function (req, res) {
@@ -110,6 +110,6 @@ app.get("/posts/:postId", async function (req, res) {
   })
 });
 
-app.listen(3000, function() {
+app.listen(process.env.PORT || 3000, function() {
   console.log("Server started on port 3000");
 });
