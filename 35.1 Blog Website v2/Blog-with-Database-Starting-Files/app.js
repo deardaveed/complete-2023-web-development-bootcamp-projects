@@ -23,14 +23,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 // create Schema to define Model for blog post(s)
-const postSchema = new mongoose.Schema({
+const postSchema = ({
   title: String,
   content: String,
 });
 
 // create a new instance of a Post model based on the defined schema
 const Post = mongoose.model("Post", postSchema);
-
 
 // setup Mongoose DB connection
 main().catch(function (err) {
@@ -39,66 +38,60 @@ main().catch(function (err) {
 
 async function main() {
   await mongoose.connect("mongodb://127.0.0.1:27017/blogDB");
+}
 
-  app.get("/", async function (req, res) {
+app.get("/", async function (req, res) {
 
-    await Post.find({}).then(function (foundPosts) {
-      if (foundPosts) {
-        console.log("AM I GETTING HIT?");
-        res.render("home", {
-          startingContent: homeStartingContent,
-          posts: foundPosts
-        });
-      } else {
-        console.error("Error getting blog posts!");
-      }
-    })
-
-  });
-
-  app.get("/about", function(req, res){
-    res.render("about", {aboutContent: aboutContent});
-  });
-
-  app.get("/contact", function(req, res){
-    res.render("contact", {contactContent: contactContent});
-  });
-
-  app.get("/compose", function(req, res){
-    res.render("compose");
-  });
-
-  app.post("/compose", async function (req, res) {
-
-    // create new document and insert into 'posts' collection
-    const post = new Post({
-      title: req.body.postTitle,
-      content: req.body.postBody
-    })
-
-    await post.save().then(function (postSaved) {
-
-      if (!postSaved) {
-
-        console.error("ERROR IN SAVING POST", postSaved);
-
-      } else {
-
-        res.redirect("/");
-
-      }
-    })
-
+  await Post.find({}).then(function (foundPosts) {
+    if (foundPosts) {
+      console.log("AM I GETTING HIT?");
+      res.render("home", {
+        startingContent: homeStartingContent,
+        posts: foundPosts
+      });
+    } else {
+      console.error("Error getting blog posts!");
+    }
   })
 
-  app.get("/posts/:postId", function (req, res) {
-    const requestedPostId = req.params.postId;
-    const requestedTitle = _.lowerCase(req.params.postName);
+});
 
-  });
+app.get("/about", function(req, res){
+  res.render("about", {aboutContent: aboutContent});
+});
 
-  app.listen(3000, function() {
-    console.log("Server started on port 3000");
-  });
+app.get("/contact", function(req, res){
+  res.render("contact", {contactContent: contactContent});
+});
 
-}
+app.get("/compose", function(req, res){
+  res.render("compose");
+});
+
+app.post("/compose", async function (req, res) {
+
+  // create new document and insert into 'posts' collection
+  const post = new Post({
+    title: req.body.postTitle,
+    content: req.body.postBody
+  })
+
+  await post.save().then(function (postSaved) {
+    if (!postSaved) {
+      console.error("ERROR IN SAVING POST", postSaved);
+    } else {
+      res.redirect("/");
+    }
+  })
+
+})
+
+app.get("/posts/:postId", function (req, res) {
+  const requestedPostId = req.params.postId;
+  const requestedTitle = _.lowerCase(req.params.postName);
+
+});
+
+app.listen(3000, function() {
+  console.log("Server started on port 3000");
+});
