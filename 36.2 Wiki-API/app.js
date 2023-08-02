@@ -24,6 +24,7 @@ const articleSchema = new mongoose.Schema({
 
 const Article = mongoose.model("Article", articleSchema);
 
+//route handlers for all articles
 app.route("/articles")
 
   .get(async (req, res) => {
@@ -52,7 +53,38 @@ app.route("/articles")
         res.send("Successfully deleted all articles!"))
       .catch(
         err => { res.send(err) });
-});
+  });
+
+//route handlers for a specific article
+app.route("/articles/:articleTitle")
+
+  .get(async (req, res) => {
+    try {
+      const article = await Article.findOne({ title: req.params.articleTitle });
+      if (article) {
+        res.send("Successfully found the specific article!");
+      } else {
+        res.send("No articles matching that title was found!");
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  })
+
+  .put(async (req, res) => {
+    try {
+      const updateArticle = await Article.updateOne({title: req.params.articleTitle},
+        {title: req.body.title, content: req.body.content });
+
+      if (updateArticle.modifiedCount > 0) {
+        res.send("Update was successful");
+      } else {
+        res.send("Error in updating article!")
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  });
 
 app.listen(process.env.PORT || 3000, function () {
   console.log("Server started on port 3000");
