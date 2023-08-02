@@ -67,14 +67,14 @@ app.route("/articles/:articleTitle")
         res.send("No articles matching that title was found!");
       }
     } catch (err) {
-      console.error(err);
+      res.send(err);
     }
   })
 
   .put(async (req, res) => {
     try {
-      const updateArticle = await Article.updateOne({title: req.params.articleTitle},
-        {title: req.body.title, content: req.body.content });
+      const updateArticle = await Article.updateOne({ title: req.params.articleTitle },
+        { title: req.body.title, content: req.body.content });
 
       if (updateArticle.modifiedCount > 0) {
         res.send("Update was successful");
@@ -82,7 +82,23 @@ app.route("/articles/:articleTitle")
         res.send("Error in updating article!")
       }
     } catch (err) {
-      console.error(err);
+      res.status(500).send(err);
+    }
+  })
+
+  .delete(async (req, res) => {
+    try {
+      const deletedArticle = await Article.findOneAndDelete(
+        { title: req.params.articleTitle }
+      );
+
+      if (deletedArticle) {
+        res.send("Article was deleted: ", deletedArticle);
+      } else {
+        res.send("Could not find article to delete.");
+      }
+    } catch (err) {
+      res.status(500).send(err);
     }
   });
 
