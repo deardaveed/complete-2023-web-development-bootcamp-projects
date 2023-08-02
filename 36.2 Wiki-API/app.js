@@ -24,27 +24,35 @@ const articleSchema = new mongoose.Schema({
 
 const Article = mongoose.model("Article", articleSchema);
 
-app.get("/articles", async (req, res) => {
+app.route("/articles")
 
-  await Article.find()
-    .then((foundArticles => {res.send(foundArticles);
-    }))
-    .catch(err => {
-      res.send(err);
-    });
-
-});
-
-app.post("/articles", async (req, res) => {
-
-  await Article.create({
-    title: req.body.title,
-    content: req.body.content
+  .get(async (req, res) => {
+    await Article.find()
+      .then(
+        (foundArticles => { res.send(foundArticles); }))
+      .catch(
+        err => { res.send(err); });
   })
-    .then(res.send("Successfully added a new article!"))
-    .catch(err => { res.send(err) });
 
-})
+  .post(async (req, res) => {
+    await Article
+      .create({
+        title: req.body.title,
+        content: req.body.content
+    })
+      .then(
+        res.send("Successfully added a new article!"))
+      .catch(
+        err => { res.send(err) });
+  })
+
+  .delete(async (req, res) => {
+    await Article.deleteMany()
+      .then(
+        res.send("Successfully deleted all articles!"))
+      .catch(
+        err => { res.send(err) });
+});
 
 app.listen(process.env.PORT || 3000, function () {
   console.log("Server started on port 3000");
