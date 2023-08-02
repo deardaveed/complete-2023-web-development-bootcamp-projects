@@ -25,19 +25,25 @@ const articleSchema = new mongoose.Schema({
 const Article = mongoose.model("Article", articleSchema);
 
 app.get("/articles", async (req, res) => {
+
   await Article.find()
     .then((foundArticles => {res.send(foundArticles);
     }))
     .catch(err => {
       res.send(err);
     });
+
 });
 
-app.post("/articles", (req, res) => {
-  console.log(req.body.title);
-  console.log(req.body.content);
+app.post("/articles", async (req, res) => {
 
-  // await Article.create();
+  await Article.create({
+    title: req.body.title,
+    content: req.body.content
+  })
+    .then(res.send("Successfully added a new article!"))
+    .catch(err => { res.send(err) });
+
 })
 
 app.listen(process.env.PORT || 3000, function () {
