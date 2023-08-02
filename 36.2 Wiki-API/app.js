@@ -24,6 +24,22 @@ const articleSchema = new mongoose.Schema({
 
 const Article = mongoose.model("Article", articleSchema);
 
+app.get("/articles", async (req, res) => {
+  await Article.find()
+    .then((foundArticles => {res.send(foundArticles);
+    }))
+    .catch(err => {
+      res.send(err);
+    });
+});
+
+app.post("/articles", (req, res) => {
+  console.log(req.body.title);
+  console.log(req.body.content);
+
+  // await Article.create();
+})
+
 app.listen(process.env.PORT || 3000, function () {
   console.log("Server started on port 3000");
 });
