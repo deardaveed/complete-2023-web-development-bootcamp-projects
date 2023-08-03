@@ -34,7 +34,8 @@ async function main() {
 const userSchema = new mongoose.Schema({
   email: String,
   password: String,
-  googleId: String
+  googleId: String,
+  secret: String
 })
 
 userSchema.plugin(passportLocalMongoose);
@@ -70,7 +71,6 @@ passport.use(new GoogleStrategy({
 
   },
   function (accessToken, refreshToken, profile, cb) {
-    console.log(profile);
 
     User.findOrCreate({ googleId: profile.id }, function (err, user) {
       return cb(err, user);
@@ -101,11 +101,32 @@ app.get("/register", (req, res) => {
 })
 
 app.get("/secrets", (req, res) => {
+  User.find({ "secret": { $ne: null } }).then(foundUsers => {
+    if (foundUsers.length > 0) {
+      res.render("secrets", {usersWithSecrets: foundUsers })
+    }
+  })
+})
+
+app.get("/submit", (req, res) => {
   if (req.isAuthenticated()) {
-    res.render("secrets");
+    res.render("submit");
   } else {
     res.redirect("/login");
   }
+})
+
+app.post("/submit", async (req, res) => {
+
+  const submittedSecret = req.body.secret;
+
+  await User.findById(req.user.id).then( (foundUser) => {
+    if (foundUser) {
+      foundUser.secret = submittedSecret;
+      foundUser.save();
+      res.redirect("/secrets");
+    }
+  })
 })
 
 app.get('/logout', (req, res) => {
