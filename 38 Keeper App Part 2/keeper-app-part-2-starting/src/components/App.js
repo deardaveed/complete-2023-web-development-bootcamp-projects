@@ -4,10 +4,11 @@ import Footer from "./Footer";
 import Note from "./Note";
 import notes from "../notes";
 
-function createNote(notes) {
+function createNote(entry) {
   return <Note
-    name={notes.title}
-    content={notes.content}
+    key={entry.key}
+    name={entry.title}
+    content={entry.content}
   />
 }
 
